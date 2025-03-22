@@ -1,0 +1,20 @@
+{
+  "name": "allen",
+  "dob": "1990-01-15",
+  "conditions": ["Diabetes", "Hypertension"],
+  "medications": [
+    { "name": "Metformin", "dosage": "500mg", "frequency": "Twice a day" },
+    { "name": "Lisinopril", "dosage": "10mg", "frequency": "Once a day" }
+  ],
+  "allergies": ["Penicillin"],
+  "lab_results": {
+    "blood_sugar": "120 mg/dL",
+    "cholesterol": "190 mg/dL"
+  },
+  "doctor_notes": [
+    {
+      "date": "2024-02-01",
+      "note": "Patient's blood sugar levels are improving."
+    }
+  ]
+}

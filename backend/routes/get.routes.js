@@ -1,0 +1,8 @@
+// import express from "express";
+// import { getPostComment } from "../controllers/comment.controller.js";
+// import { getPosts } from "../controllers/upload.controller.js";
+
+// const router = express.Router();
+// router.post("/getPostComments", getPostComment);
+// router.get("/getPosts", getPosts);
+// export default router;

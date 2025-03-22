@@ -1,0 +1,40 @@
+{
+  "name": "Mrs Khalifa",
+  "dob": null,
+  "conditions": [],
+  "medications": [
+    {
+      "name": "Paracetamol",
+      "dosage": "800mg",
+      "frequency": "TDS (3 times a day)"
+    },
+    {
+      "name": "Paracetamol",
+      "dosage": "800mg",
+      "frequency": "tds (3 times a day)"
+    },
+    {
+      "name": "Amoxicil",
+      "dosage": "800mg",
+      "frequency": "3 times a day"
+    },
+    {
+      "name": "Prametmol",
+      "dosage": "800mg",
+      "frequency": "1-0-1 33days"
+    },
+    {
+      "name": "Paracetamol",
+      "dosage": "800mg",
+      "frequency": "1 tablet 3 times a day"
+    }
+  ],
+  "allergies": [],
+  "lab_results": {},
+  "doctor_notes": [
+    {
+      "date": "Unknown",
+      "note": "Unknown"
+    }
+  ]
+}
