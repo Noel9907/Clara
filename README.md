@@ -1,6 +1,6 @@
 # 🤖 Clara - Your Personal Medical AI Assistant
 
-![gitlifeVideoGIF](https://github.com/user-attachments/assets/e8623512-85ee-4cda-b70a-a25f428e4a73)
+
 
 ---
 Video Link:
@@ -19,15 +19,18 @@ Welcome to GitLife, the app that proves version control can be as chaotic and un
 
 ## 📖 Introduction
 
-Welcome to GitLife! Here, you can interact with your life decisions just like you would with your Git repositories—without needing to understand anything about Git! Commit your choices, create new branches for those “what if” scenarios, and visualize your life timeline as a graph. It's like living your life with a commit history, because who needs spontaneity?
+Meet Clara, your personal medical AI assistant, designed to make healthcare more accessible and personalized. Clara is an AI-powered medical companion that helps you analyze doctor diagnoses, provides lifestyle advice, maintains your medical history, tracks medications, and offers a smart, personalized chatbot for all your health-related queries.
+
+With Retrieval-Augmented Generation (RAG) technology, Clara understands your unique medical needs, structures complex doctor reports into easily digestible formats, and ensures you have the best insights to maintain a healthy lifestyle.
 
 ## 🌟 Features
 
-- **Decision Commits**: Turn every life choice into a commit—because it’s easier to track regrets this way!
-- **Branch Out**: Create branches for alternative paths in life, so you can wonder “what if?” without any real commitment.
-- **Graphical Timeline**: Visualize your life as a graph, showing your ups, downs, and existential crises.
-- **User-Friendly Interface**: Enjoy navigating through choices with an interface that may or may not make sense.
-- **Community Shenanigans**: Join others who are just as lost as you are, sharing the joys of turning life into code.
+- **Doctor’s Diagnosis Analysis**: Clara converts complex medical jargon into structured, easy-to-understand insights.
+- **Medical History Management**: Keeps track of your medical records, previous conditions, and treatment plans in one place.
+- **Medication Tracker**: Never miss a dose—Clara reminds you about your ongoing medications and possible interactions.
+- **Lifestyle Recommendations**: Get personalized advice on diet, exercise, sleep, and mental health based on your medical history.
+- **AI-Powered Chatbot**: Uses RAG to provide personalized medical insights, helping you understand symptoms, treatments, and wellness tips.
+- **Smart Document Processing**: Converts handwritten doctor prescriptions into structured, digital records for easy reference.
 
 ## 🛠 Installation
 
@@ -35,53 +38,44 @@ Ready to embark on this emotional rollercoaster? Here’s how to get started:
 
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/soorajdmg/GitLife
+    git clone https://github.com/soorajdmg/Clara
     ```
 
 2. **Open the project in your favorite IDE:**
-    - Good luck navigating your file system!
-
-3. **Run the application:**
-    - If things go wrong, just remember: it’s not you; it’s the universe.
+    ```sh
+        cd Clara
+    ```
 
 ## 🎮 Usage
 
-Navigate through the app and commit your life decisions with a sense of thrill and potential disaster! Keep your life “alive” while enjoying the weirdness of this experience.
+1. Upload your medical documents or enter your diagnosis details.
+
+2. Ask Clara any medical-related questions via the chatbot.
+
+3. Receive structured insights on your diagnosis and medications.
+
+4. Get daily recommendations on diet, exercise, and mental health.
+
+5. Track your medical history and upcoming doctor appointments.
 
 ## 🤝 Contributing
 
-We welcome your contributions, even if they are as chaotic as this project itself. Here’s how to get involved:
+We welcome contributions to make Clara even smarter and more efficient! Here’s how you can help:
 
 1. Fork the Project.
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`).
 4. Push to the Branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request and try not to laugh too hard at your genius!
+5. Open a Pull Request and help improve Clara!
 
 ## 📬 Contact
 
-Got questions, funny life stories, or want to share your version control mishaps? Reach out to me:
+Have questions, feedback, or want to share your experience with Clara? Reach out to me:
 
 - **Email:** [soorajmurugaraj@gmail.com](mailto:soorajmurugaraj@gmail.com)
 - **GitHub:** [soorajdmg](https://github.com/soorajdmg)
 
 ---
 
-⭐️ If you enjoy this wonderfully chaotic experience, please give it a star! It might not fix your life, but it will definitely bring a smile.
+⭐️ If Clara helps you take control of your health, give it a star on GitHub!
 ---
-
-https://github.com/user-attachments/assets/fffc5474-a644-4cc9-8bed-7e239f70668d
-
----
-![image](https://github.com/user-attachments/assets/3a9a825d-f65e-4344-b677-998a67992c24)
----
-![image](https://github.com/user-attachments/assets/fb48eaa4-1bdd-44e8-b3dd-cd574f801bed)
----
-![image](https://github.com/user-attachments/assets/db7dafec-8720-4703-8b8c-af2bb967ef18)
----
-![image](https://github.com/user-attachments/assets/291c788f-a175-40ec-b539-96907d69540f)
----
-![image](https://github.com/user-attachments/assets/c36b385e-4a9b-4a85-8bc6-f57246b8d247)
----
-![image](https://github.com/user-attachments/assets/d7e8adb0-ab60-4e2a-b922-bc16601ac25a)
-
