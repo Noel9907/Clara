@@ -1,4 +1,4 @@
-![clara4](https://github.com/user-attachments/assets/7d4752a0-8ffc-42b0-92a3-3fb251da59ea)# 🤖 Clara - Your Personal Medical AI Assistant
+# 🤖 Clara - Your Personal Medical AI Assistant
 
 
 
@@ -81,7 +81,8 @@ Have questions, feedback, or want to share your experience with Clara? Reach out
 ---
 ![clara1](https://github.com/user-attachments/assets/2bc8c60c-3f01-4688-ae35-e53968f9546c)
 ---
-![Uploading clara2.png…]()
+![clara2](https://github.com/user-attachments/assets/fade34f3-90d4-45cb-bc5c-168f1013d24a)
+
 ---
 ![clara3](https://github.com/user-attachments/assets/86a09295-eea3-46b6-bdfd-11ca80638072)
 ---
