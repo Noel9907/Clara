@@ -1,0 +1,234 @@
+.login-container {
+  display: flex;
+  min-height: calc(100vh - [footer-height]px);
+  width: 100%;
+  padding-top: 5rem;
+  align-items: stretch;
+}
+
+.login-form-container {
+  /* border-color: rgba(33, 150, 243, 0.7); */
+  /* border-width: 1rem; */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 4rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* When the image is shown, adjust the form container */
+@media (min-width: 768px) {
+  .login-form-container {
+    margin: 0;
+    /* Remove auto margin when side by side with image */
+  }
+
+  /* Add this to ensure proper spacing */
+  .login-container {
+    justify-content: center;
+  }
+}
+
+.login-header {
+  margin-bottom: 2rem;
+}
+
+.login-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.login-header p {
+  color: #666;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  color: black;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+}
+
+.remember-me input {
+  margin-right: 0.5rem;
+}
+
+.forgot-password {
+  color: #2196f3;
+  text-decoration: none;
+}
+
+.login-button {
+  width: 100%;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-button:hover {
+  background-color: #1976d2;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.login-footer {
+  margin: 0.5rem !important;
+  text-align: center;
+  color: #666;
+}
+
+.signup-link {
+  color: #2196f3;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Right side - Image container */
+.login-image-container {
+  flex: 1;
+  position: relative;
+  display: none;
+  /* Hidden on mobile by default */
+}
+
+.login-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/path/to/your/health-image.jpg');
+  /* Replace with your actual image path */
+  background-size: cover;
+  background-position: center;
+}
+
+.login-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(33, 150, 243, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.login-overlay h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.login-overlay p {
+  font-size: 1.2rem;
+  max-width: 80%;
+}
+
+/* Media queries for responsive design */
+@media (min-width: 768px) {
+  .login-image-container {
+    display: block;
+    /* Show on tablet and larger */
+  }
+}
+
+@media (max-width: 767px) {
+  .login-container {
+    flex-direction: column;
+  }
+
+  .login-form-container {
+    padding: 2rem;
+    max-width: 100%;
+  }
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
