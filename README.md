@@ -6,7 +6,7 @@
 Video Link:
 ---
 
-Welcome to GitLife, the app that proves version control can be as chaotic and unpredictable as your life! Forget the boring Git tutorials; we’re here to turn your life decisions into a version control system. Because who doesn’t want to commit their choices like they’re pushing code?
+Welcome to Clara, your personal AI medical assistant! Forget confusing medical jargon—Clara analyzes doctor diagnoses, tracks your medical history, and provides lifestyle advice tailored just for you. Whether it's diet, sleep, exercise, or mental health, Clara ensures you stay on top of your well-being. With its advanced RAG-powered chatbot, you can ask any medical-related question and get personalized, structured insights. Because your health deserves smart, accessible, and reliable guidance! 🚀
 
 ## 🚀 Table of Contents
 
