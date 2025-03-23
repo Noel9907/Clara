@@ -1,0 +1,290 @@
+/* Lifestyle Tab Styles */
+.lifestyle-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 0;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .lifestyle-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e0e6ed;
+  }
+  
+  .lifestyle-header h2 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+  }
+  
+  .lifestyle-header p {
+    color: #7f8c8d;
+    margin-bottom: 1.5rem;
+  }
+  
+  .condition-selector {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  
+  .condition-selector label {
+    margin-right: 1rem;
+    font-weight: 500;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+  }
+  
+  .condition-select {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e0e6ed;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #2c3e50;
+    background-color: #fff;
+    min-width: 250px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  
+  .condition-select:focus {
+    border-color: #3498db;
+  }
+  
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: #7f8c8d;
+  }
+  
+  .spinner-icon {
+    font-size: 2rem;
+    color: #3498db;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    text-align: center;
+    color: #7f8c8d;
+  }
+  
+  .empty-icon {
+    font-size: 3rem;
+    color: #3498db;
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+  }
+  
+  .empty-state h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+  
+  .lifestyle-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .lifestyle-nav {
+    display: flex;
+    border-bottom: 1px solid #e0e6ed;
+    padding: 0 1rem;
+    background-color: #f8f9fa;
+  }
+  
+  .lifestyle-nav-btn {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 1rem 1.5rem;
+    color: #7f8c8d;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 3px solid transparent;
+    outline: none !important;
+  }
+  
+  .lifestyle-nav-btn:hover {
+    color: #3498db;
+  }
+  
+  .lifestyle-nav-btn.active {
+    color: #3498db;
+    border-bottom: 3px solid #3498db;
+    font-weight: 500;
+  }
+  
+  .nav-icon {
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+  }
+  
+  .lifestyle-details {
+    padding: 2rem;
+    flex: 1;
+  }
+  
+  .lifestyle-details h3 {
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    border-bottom: 1px solid #e0e6ed;
+    padding-bottom: 0.75rem;
+  }
+  
+  .suggestion-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .suggestion-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    flex: 1;
+    min-width: calc(50% - 0.75rem);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e0e6ed;
+  }
+  
+  .suggestion-card.full-width {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  .suggestion-card h4 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    font-size: 1.1rem;
+  }
+  
+  .suggestion-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .suggestion-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e0e6ed;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  
+  .suggestion-list li:last-child {
+    border-bottom: none;
+  }
+  
+  .suggestion-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #3498db;
+    font-weight: bold;
+  }
+  
+  .suggestion-list.warning li::before {
+    color: #e74c3c;
+  }
+  
+  .suggestion-list.meal-plan li,
+  .suggestion-list.schedule li {
+    font-weight: 500;
+    color: #34495e;
+  }
+  
+  .disclaimer {
+    display: flex;
+    align-items: center;
+    background-color: #f0f7ff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border-left: 4px solid #3498db;
+    width: 100%;
+  }
+  
+  .disclaimer-icon {
+    color: #3498db;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+  
+  .disclaimer p {
+    margin: 0;
+    color: #34495e;
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 992px) {
+    .suggestion-card {
+      min-width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .lifestyle-header,
+    .lifestyle-details {
+      padding: 1.5rem;
+    }
+    
+    .lifestyle-nav {
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 0;
+    }
+    
+    .lifestyle-nav-btn {
+      padding: 1rem;
+    }
+    
+    .condition-selector {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .condition-select {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .lifestyle-header {
+      padding: 1rem;
+    }
+    
+    .lifestyle-details {
+      padding: 1rem;
+    }
+    
+    .suggestion-section {
+      gap: 1rem;
+    }
+    
+    .suggestion-card {
+      padding: 1rem;
+    }
+  }
