@@ -3,7 +3,8 @@
 
 
 ---
-https://github.com/Noel9907/Clara/blob/main/claraVideoComp.mp4
+![claraVidGif](https://github.com/user-attachments/assets/8ba9c51a-a3ed-4130-8a58-26f05d476051)
+
 ---
 
 Welcome to Clara, your personal AI medical assistant! Forget confusing medical jargon—Clara analyzes doctor diagnoses, tracks your medical history, and provides lifestyle advice tailored just for you. Whether it's diet, sleep, exercise, or mental health, Clara ensures you stay on top of your well-being. With its advanced RAG-powered chatbot, you can ask any medical-related question and get personalized, structured insights. Because your health deserves smart, accessible, and reliable guidance! 🚀
