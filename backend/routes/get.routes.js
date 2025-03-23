@@ -1,6 +1,13 @@
 import express from "express";
-import { getlifestyle } from "../controllers/getinfo.controller.js";
+import {
+  getRecords,
+  getMedications,
+} from "../controllers/getinfo.controller.js";
+import { getlifestyle } from '../controllers/lifestyle.controller.js'
 
 const router = express.Router();
-router.get("/getLifestyle", getlifestyle);
+router.post("/getLifestyle", getlifestyle);
+router.post("/getrecords", getRecords);
+router.post("/meds", getMedications);
+
 export default router;

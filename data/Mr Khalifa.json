@@ -1,0 +1,15 @@
+{
+  "name": "Mr Khalifa",
+  "dob": null,
+  "conditions": [],
+  "medications": [
+    {
+      "name": "Pamelot mol",
+      "dosage": "800mg",
+      "frequency": "1 33days"
+    }
+  ],
+  "allergies": [],
+  "lab_results": {},
+  "doctor_notes": []
+}

@@ -27,6 +27,16 @@
       "name": "Paracetamol",
       "dosage": "800mg",
       "frequency": "1 tablet 3 times a day"
+    },
+    {
+      "name": "Paracetamol",
+      "dosage": "800mg",
+      "frequency": "tds (3 times a day)"
+    },
+    {
+      "name": "Amoxicillin",
+      "dosage": "800mg",
+      "frequency": "3 times a day for 7 days"
     }
   ],
   "allergies": [],

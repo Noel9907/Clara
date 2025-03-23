@@ -1,208 +1,375 @@
 import React, { useState, useEffect } from 'react';
-import { FaUtensils, FaRunning, FaBed, FaHeart, FaBrain, FaSpinner } from 'react-icons/fa';
-import './lifestyleTab.css'
+import { FaUtensils, FaRunning, FaBed, FaBrain, FaHeart, FaSpinner } from 'react-icons/fa';
+import './lifestyleTab.css';
 
-const LifestyleTab = () => {
+const LifestyleTab = ({ user }) => {
   const [loading, setLoading] = useState(true);
-  const [conditions, setConditions] = useState([]);
-  const [selectedCondition, setSelectedCondition] = useState('');
   const [suggestions, setSuggestions] = useState(null);
   const [activeSection, setActiveSection] = useState('diet');
-  
-  // Simulate fetching patient's medical conditions
+  const [error, setError] = useState(null);
+
+  // Fetch lifestyle recommendations when component mounts
   useEffect(() => {
-    const fetchConditions = async () => {
+    const fetchLifestyleData = async () => {
       try {
-        // Replace with actual API call
-        // const response = await fetch('/api/patient/conditions');
-        // const data = await response.json();
-        
-        // Simulated data for development
-        const data = [
-          { id: 1, name: 'Hypertension' },
-          { id: 2, name: 'Type 2 Diabetes' },
-          { id: 3, name: 'Asthma' },
-          { id: 4, name: 'Arthritis' }
-        ];
-        
-        setConditions(data);
+        const name = "allen";
+        setLoading(true);
+
+        const response = await fetch('http://localhost:3000/api/get/getlifestyle', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name: name || 'allen' }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error fetching lifestyle data: ${response.status}`);
+        }
+
+        const data = await response.json();
+        processLifestyleData(data.lifestylePlan);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching conditions:', error);
+        console.error('Error fetching lifestyle data:', error);
+        setError(error.message);
         setLoading(false);
       }
     };
-    
-    fetchConditions();
-  }, []);
-  
-  // Function to fetch lifestyle suggestions based on condition
-  const fetchSuggestions = async (conditionName) => {
-    setLoading(true);
+
+    fetchLifestyleData();
+  }, [user?.name]);
+
+  // Process and parse the lifestyle data from the API
+  const processLifestyleData = (lifestylePlanText) => {
     try {
-      // Replace with actual API call to your AI service
-      // const response = await fetch(`/api/lifestyle-suggestions?condition=${conditionName}`);
-      // const data = await response.json();
-      
-      // Simulated delay and response
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Sample data - in production this would come from your AI service
-      const mockSuggestions = {
-        condition: conditionName,
+      // The structure to fill
+      const lifestylePlan = {
         diet: {
-          recommendedFoods: [
-            "Leafy greens (spinach, kale, arugula)",
-            "Berries (blueberries, strawberries)",
-            "Fatty fish (salmon, mackerel)",
-            "Whole grains (quinoa, brown rice)",
-            "Legumes (beans, lentils)"
-          ],
-          foodsToAvoid: [
-            "Processed meats (bacon, sausage)",
-            "Added sugars (candy, cookies)",
-            "Refined carbohydrates (white bread, pasta)",
-            "Fried foods",
-            "High-sodium foods (canned soups, processed snacks)"
-          ],
-          mealPlan: [
-            "Breakfast: Greek yogurt with berries and nuts",
-            "Lunch: Grilled chicken salad with olive oil dressing",
-            "Dinner: Baked salmon with quinoa and steamed vegetables",
-            "Snacks: Apple slices with almond butter or vegetable sticks with hummus"
-          ]
+          recommendedFoods: [],
+          foodsToAvoid: [],
+          mealPlan: []
         },
         exercise: {
-          recommendedActivities: [
-            "Walking (30 minutes daily)",
-            "Swimming (2-3 times per week)",
-            "Stationary cycling (low impact)",
-            "Strength training (2 times per week)",
-            "Yoga or tai chi (for flexibility and stress reduction)"
-          ],
-          precautions: [
-            "Start slowly and gradually increase intensity",
-            "Monitor blood pressure before and after exercise",
-            "Stay hydrated throughout workout sessions",
-            "Avoid exercise during extreme heat",
-            "Stop if experiencing chest pain, dizziness, or severe shortness of breath"
-          ],
-          weeklyPlan: [
-            "Monday: 30-minute walk + 15-minute stretching",
-            "Tuesday: 20-minute water aerobics or swimming",
-            "Wednesday: Rest or gentle yoga",
-            "Thursday: 30-minute walk + light resistance training",
-            "Friday: 20-minute stationary bike",
-            "Saturday: 40-minute outdoor activity (walking, gardening)",
-            "Sunday: Rest or gentle stretching"
-          ]
+          recommendedActivities: [],
+          precautions: [],
+          weeklyPlan: []
         },
         sleep: {
-          recommendations: [
-            "Aim for 7-8 hours of sleep per night",
-            "Maintain consistent sleep and wake times",
-            "Create a cool, dark, quiet sleeping environment",
-            "Limit screen time 1 hour before bed",
-            "Avoid caffeine after 2pm"
-          ],
-          techniques: [
-            "Progressive muscle relaxation before bed",
-            "Deep breathing exercises",
-            "Meditation or guided imagery",
-            "White noise machine if environment is noisy",
-            "Journal before bed to clear thoughts"
-          ]
+          recommendations: [],
+          techniques: []
         },
         mentalHealth: {
-          stressManagement: [
-            "Daily meditation (5-15 minutes)",
-            "Mindfulness practice during daily activities",
-            "Deep breathing exercises throughout the day",
-            "Connect with friends and family regularly",
-            "Limit news and social media consumption"
-          ],
-          resources: [
-            "Mental health apps (Headspace, Calm, etc.)",
-            "Local support groups",
-            "Telehealth counseling options",
-            "Stress management workshops",
-            "Crisis hotlines and resources"
-          ]
+          stressManagement: [],
+          resources: []
         }
       };
-      
-      setSuggestions(mockSuggestions);
-      setLoading(false);
+
+      // Parse exercise section (section 1)
+      const exerciseMatch = lifestylePlanText.match(/1\.\s*\*Exercise Plan\*([\s\S]*?)(?=2\.|$)/);
+      if (exerciseMatch && exerciseMatch[1]) {
+        const exerciseSection = exerciseMatch[1];
+
+        // Extract recommended activities
+        const activitiesMatch = exerciseSection.match(/\*Recommended Activities:\*([\s\S]*?)(?=\*Exercise Precautions:|$)/);
+        if (activitiesMatch && activitiesMatch[1]) {
+          lifestylePlan.exercise.recommendedActivities = activitiesMatch[1]
+            .split('-')
+            .filter(item => item.trim())
+            .map(item => item.trim());
+        }
+
+        // Extract exercise precautions
+        const precautionsMatch = exerciseSection.match(/\*Exercise Precautions:\*([\s\S]*?)(?=\*Weekly Exercise Plan:|$)/);
+        if (precautionsMatch && precautionsMatch[1]) {
+          lifestylePlan.exercise.precautions = precautionsMatch[1]
+            .split('-')
+            .filter(item => item.trim())
+            .map(item => item.trim());
+        }
+
+        // Extract weekly exercise plan
+        const planMatch = exerciseSection.match(/\*Weekly Exercise Plan:\*([\s\S]*?)(?=\n\d\.|$)/);
+        if (planMatch && planMatch[1]) {
+          lifestylePlan.exercise.weeklyPlan = planMatch[1]
+            .split('-')
+            .filter(item => item.trim())
+            .map(item => item.trim());
+        }
+      }
+
+      // Parse sleep section (section 2)
+      const sleepMatch = lifestylePlanText.match(/2\.\s*\*Sleep Schedule\*([\s\S]*?)(?=3\.|$)/);
+      if (sleepMatch && sleepMatch[1]) {
+        const sleepSection = sleepMatch[1];
+
+        // Extract sleep recommendations
+        const recommendationsMatch = sleepSection.match(/\*Sleep Recommendations:\*([\s\S]*?)(?=\*Sleep Improvement Techniques:|$)/);
+        if (recommendationsMatch && recommendationsMatch[1]) {
+          lifestylePlan.sleep.recommendations = recommendationsMatch[1]
+            .split('-')
+            .filter(item => item.trim())
+            .map(item => item.trim());
+        }
+
+        // Extract sleep improvement techniques
+        const techniquesMatch = sleepSection.match(/\*Sleep Improvement Techniques:\*([\s\S]*?)(?=\n\d\.|$)/);
+        if (techniquesMatch && techniquesMatch[1]) {
+          lifestylePlan.sleep.techniques = techniquesMatch[1]
+            .split('-')
+            .filter(item => item.trim())
+            .map(item => item.trim());
+        }
+      }
+
+      // Parse mental health section (section 3)
+      const mentalMatch = lifestylePlanText.match(/3\.\s*\*Mental Health\*([\s\S]*?)(?=4\.|$)/);
+      if (mentalMatch && mentalMatch[1]) {
+        const mentalSection = mentalMatch[1];
+
+        // Extract stress management
+        const stressMatch = mentalSection.match(/\*Stress Management:\*([\s\S]*?)(?=\*Mental Health Resources:|$)/);
+        if (stressMatch && stressMatch[1]) {
+          lifestylePlan.mentalHealth.stressManagement = stressMatch[1]
+            .split('-')
+            .filter(item => item.trim())
+            .map(item => item.trim());
+        }
+
+        // Extract mental health resources
+        const resourcesMatch = mentalSection.match(/\*Mental Health Resources:\*([\s\S]*?)(?=\n\d\.|$)/);
+        if (resourcesMatch && resourcesMatch[1]) {
+          lifestylePlan.mentalHealth.resources = resourcesMatch[1]
+            .split('-')
+            .filter(item => item.trim())
+            .map(item => item.trim());
+        }
+      }
+
+      // Parse diet section (section 4)
+      const dietMatch = lifestylePlanText.match(/4\.\s*\*Diet Plan\*([\s\S]*?)(?=\n\d\.|$)/);
+      if (dietMatch && dietMatch[1]) {
+        const dietSection = dietMatch[1];
+
+        // Extract recommended foods
+        const recommendedFoodsMatch = dietSection.match(/\*Recommended Foods:\*([\s\S]*?)(?=\*Foods to Avoid:|$)/);
+        if (recommendedFoodsMatch && recommendedFoodsMatch[1]) {
+          lifestylePlan.diet.recommendedFoods = recommendedFoodsMatch[1]
+            .split('-')
+            .filter(item => item.trim())
+            .map(item => item.trim());
+        }
+
+        // Extract foods to avoid
+        const avoidFoodsMatch = dietSection.match(/\*Foods to Avoid:\*([\s\S]*?)(?=\*Sample Meal Plan:|$)/);
+        if (avoidFoodsMatch && avoidFoodsMatch[1]) {
+          lifestylePlan.diet.foodsToAvoid = avoidFoodsMatch[1]
+            .split('-')
+            .filter(item => item.trim())
+            .map(item => item.trim());
+        }
+
+        // Extract sample meal plan
+        const mealPlanMatch = dietSection.match(/\*Sample Meal Plan:\*([\s\S]*?)(?=\n\d\.|$)/);
+        if (mealPlanMatch && mealPlanMatch[1]) {
+          // Extract individual meal sections
+          const breakfast = mealPlanMatch[1].match(/\*Breakfast:\*(.*?)(?=\*Lunch:|$)/);
+          const lunch = mealPlanMatch[1].match(/\*Lunch:\*(.*?)(?=\*Dinner:|$)/);
+          const dinner = mealPlanMatch[1].match(/\*Dinner:\*(.*?)(?=\*Snacks:|$)/);
+          const snacks = mealPlanMatch[1].match(/\*Snacks:\*(.*?)(?=\n\d\.|$)/);
+
+          if (breakfast && breakfast[1].trim()) lifestylePlan.diet.mealPlan.push(`Breakfast: ${breakfast[1].trim()}`);
+          if (lunch && lunch[1].trim()) lifestylePlan.diet.mealPlan.push(`Lunch: ${lunch[1].trim()}`);
+          if (dinner && dinner[1].trim()) lifestylePlan.diet.mealPlan.push(`Dinner: ${dinner[1].trim()}`);
+          if (snacks && snacks[1].trim()) lifestylePlan.diet.mealPlan.push(`Snacks: ${snacks[1].trim()}`);
+        }
+      }
+
+      setSuggestions(lifestylePlan);
     } catch (error) {
-      console.error('Error fetching suggestions:', error);
-      setLoading(false);
+      console.error('Error processing lifestyle data:', error);
+      setError('Failed to process lifestyle recommendations');
     }
   };
-  
-  const handleConditionChange = (e) => {
-    const condition = e.target.value;
-    setSelectedCondition(condition);
-    if (condition) {
-      fetchSuggestions(condition);
-    } else {
-      setSuggestions(null);
+
+  // Function to directly parse the lifestyle data as shown in the example
+  const parseStructuredData = (data) => {
+    try {
+      // Create the structure
+      const lifestylePlan = {
+        diet: {
+          recommendedFoods: [],
+          foodsToAvoid: [],
+          mealPlan: []
+        },
+        exercise: {
+          recommendedActivities: [],
+          precautions: [],
+          weeklyPlan: []
+        },
+        sleep: {
+          recommendations: [],
+          techniques: []
+        },
+        mentalHealth: {
+          stressManagement: [],
+          resources: []
+        }
+      };
+
+      // Parse each section of the data
+      const sections = data.split(/\d+\.\s*\*/);
+
+      for (let section of sections) {
+        if (!section.trim()) continue;
+
+        if (section.startsWith('Exercise Plan')) {
+          const lines = section.split('\n').filter(line => line.trim());
+          let currentCategory = '';
+
+          for (let line of lines) {
+            if (line.includes('*Recommended Activities:*')) {
+              currentCategory = 'activities';
+            } else if (line.includes('*Exercise Precautions:*')) {
+              currentCategory = 'precautions';
+            } else if (line.includes('*Weekly Exercise Plan:*')) {
+              currentCategory = 'plan';
+            } else if (line.trim().startsWith('-')) {
+              const content = line.replace('-', '').trim();
+              if (currentCategory === 'activities') {
+                lifestylePlan.exercise.recommendedActivities.push(content);
+              } else if (currentCategory === 'precautions') {
+                lifestylePlan.exercise.precautions.push(content);
+              } else if (currentCategory === 'plan') {
+                lifestylePlan.exercise.weeklyPlan.push(content);
+              }
+            }
+          }
+        } else if (section.startsWith('Sleep Schedule')) {
+          const lines = section.split('\n').filter(line => line.trim());
+          let currentCategory = '';
+
+          for (let line of lines) {
+            if (line.includes('*Sleep Recommendations:*')) {
+              currentCategory = 'recommendations';
+            } else if (line.includes('*Sleep Improvement Techniques:*')) {
+              currentCategory = 'techniques';
+            } else if (line.trim().startsWith('-')) {
+              const content = line.replace('-', '').trim();
+              if (currentCategory === 'recommendations') {
+                lifestylePlan.sleep.recommendations.push(content);
+              } else if (currentCategory === 'techniques') {
+                lifestylePlan.sleep.techniques.push(content);
+              }
+            }
+          }
+        } else if (section.startsWith('Mental Health')) {
+          const lines = section.split('\n').filter(line => line.trim());
+          let currentCategory = '';
+
+          for (let line of lines) {
+            if (line.includes('*Stress Management:*')) {
+              currentCategory = 'stress';
+            } else if (line.includes('*Mental Health Resources:*')) {
+              currentCategory = 'resources';
+            } else if (line.trim().startsWith('-')) {
+              const content = line.replace('-', '').trim();
+              if (currentCategory === 'stress') {
+                lifestylePlan.mentalHealth.stressManagement.push(content);
+              } else if (currentCategory === 'resources') {
+                lifestylePlan.mentalHealth.resources.push(content);
+              }
+            }
+          }
+        } else if (section.startsWith('Diet Plan')) {
+          const lines = section.split('\n').filter(line => line.trim());
+          let currentCategory = '';
+
+          for (let line of lines) {
+            if (line.includes('*Recommended Foods:*')) {
+              currentCategory = 'recommended';
+            } else if (line.includes('*Foods to Avoid:*')) {
+              currentCategory = 'avoid';
+            } else if (line.includes('*Sample Meal Plan:*')) {
+              currentCategory = 'meal';
+            } else if (line.includes('*Breakfast:*') && currentCategory === 'meal') {
+              const content = line.trim();
+              lifestylePlan.diet.mealPlan.push(content);
+            } else if (line.includes('*Lunch:*') && currentCategory === 'meal') {
+              const content = line.trim();
+              lifestylePlan.diet.mealPlan.push(content);
+            } else if (line.includes('*Dinner:*') && currentCategory === 'meal') {
+              const content = line.trim();
+              lifestylePlan.diet.mealPlan.push(content);
+            } else if (line.includes('*Snacks:*') && currentCategory === 'meal') {
+              const content = line.trim();
+              lifestylePlan.diet.mealPlan.push(content);
+            } else if (line.trim().startsWith('-')) {
+              const content = line.replace('-', '').trim();
+              if (currentCategory === 'recommended') {
+                lifestylePlan.diet.recommendedFoods.push(content);
+              } else if (currentCategory === 'avoid') {
+                lifestylePlan.diet.foodsToAvoid.push(content);
+              }
+            }
+          }
+        }
+      }
+
+      setSuggestions(lifestylePlan);
+    } catch (error) {
+      console.error('Error parsing structured data:', error);
+      setError('Failed to process lifestyle recommendations');
     }
   };
-  
+
   return (
     <div className="lifestyle-container">
       <div className="lifestyle-header">
         <h2>Lifestyle Recommendations</h2>
-        <p>Get personalized suggestions based on your health conditions</p>
-        
-        <div className="condition-selector">
-          <label htmlFor="condition-select">Select health condition:</label>
-          <select 
-            id="condition-select" 
-            value={selectedCondition} 
-            onChange={handleConditionChange}
-            className="condition-select"
-          >
-            <option value="">-- Select condition --</option>
-            {conditions.map(condition => (
-              <option key={condition.id} value={condition.name}>
-                {condition.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        <p>Personalized health suggestions based on your medical profile</p>
       </div>
-      
+
       {loading ? (
         <div className="loading-container">
           <FaSpinner className="spinner-icon" />
-          <p>Loading recommendations...</p>
+          <p>Loading your personalized recommendations...</p>
+        </div>
+      ) : error ? (
+        <div className="error-container">
+          <p>Error: {error}</p>
+          <button
+            className="retry-button"
+            onClick={() => window.location.reload()}
+          >
+            Retry
+          </button>
         </div>
       ) : suggestions ? (
         <div className="lifestyle-content">
           <div className="lifestyle-nav">
-            <button 
+            <button
               className={`lifestyle-nav-btn ${activeSection === 'diet' ? 'active' : ''}`}
               onClick={() => setActiveSection('diet')}
             >
               <FaUtensils className="nav-icon" />
               <span>Diet</span>
             </button>
-            <button 
+            <button
               className={`lifestyle-nav-btn ${activeSection === 'exercise' ? 'active' : ''}`}
               onClick={() => setActiveSection('exercise')}
             >
               <FaRunning className="nav-icon" />
               <span>Exercise</span>
             </button>
-            <button 
+            <button
               className={`lifestyle-nav-btn ${activeSection === 'sleep' ? 'active' : ''}`}
               onClick={() => setActiveSection('sleep')}
             >
               <FaBed className="nav-icon" />
               <span>Sleep</span>
             </button>
-            <button 
+            <button
               className={`lifestyle-nav-btn ${activeSection === 'mental' ? 'active' : ''}`}
               onClick={() => setActiveSection('mental')}
             >
@@ -210,10 +377,10 @@ const LifestyleTab = () => {
               <span>Mental Health</span>
             </button>
           </div>
-          
+
           <div className="lifestyle-details">
-            <h3>Suggestions for {suggestions.condition}</h3>
-            
+            <h3>Personalized Health Recommendations</h3>
+
             {activeSection === 'diet' && (
               <div className="suggestion-section">
                 <div className="suggestion-card">
@@ -224,7 +391,7 @@ const LifestyleTab = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="suggestion-card">
                   <h4>Foods to Avoid</h4>
                   <ul className="suggestion-list warning">
@@ -233,7 +400,7 @@ const LifestyleTab = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="suggestion-card full-width">
                   <h4>Sample Meal Plan</h4>
                   <ul className="suggestion-list meal-plan">
@@ -242,14 +409,14 @@ const LifestyleTab = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="disclaimer">
                   <FaHeart className="disclaimer-icon" />
                   <p>These dietary suggestions are general guidelines. Please consult with your healthcare provider or a registered dietitian for personalized advice.</p>
                 </div>
               </div>
             )}
-            
+
             {activeSection === 'exercise' && (
               <div className="suggestion-section">
                 <div className="suggestion-card">
@@ -260,7 +427,7 @@ const LifestyleTab = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="suggestion-card">
                   <h4>Exercise Precautions</h4>
                   <ul className="suggestion-list warning">
@@ -269,7 +436,7 @@ const LifestyleTab = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="suggestion-card full-width">
                   <h4>Weekly Exercise Plan</h4>
                   <ul className="suggestion-list schedule">
@@ -278,14 +445,14 @@ const LifestyleTab = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="disclaimer">
                   <FaHeart className="disclaimer-icon" />
                   <p>Always consult with your healthcare provider before starting a new exercise program, especially if you have existing health conditions.</p>
                 </div>
               </div>
             )}
-            
+
             {activeSection === 'sleep' && (
               <div className="suggestion-section">
                 <div className="suggestion-card">
@@ -296,7 +463,7 @@ const LifestyleTab = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="suggestion-card">
                   <h4>Sleep Improvement Techniques</h4>
                   <ul className="suggestion-list">
@@ -305,14 +472,14 @@ const LifestyleTab = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="disclaimer">
                   <FaHeart className="disclaimer-icon" />
                   <p>If you continue to experience sleep problems despite these recommendations, please consult with your healthcare provider.</p>
                 </div>
               </div>
             )}
-            
+
             {activeSection === 'mental' && (
               <div className="suggestion-section">
                 <div className="suggestion-card">
@@ -323,7 +490,7 @@ const LifestyleTab = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="suggestion-card">
                   <h4>Mental Health Resources</h4>
                   <ul className="suggestion-list">
@@ -332,7 +499,7 @@ const LifestyleTab = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="disclaimer">
                   <FaHeart className="disclaimer-icon" />
                   <p>These are general suggestions for mental wellbeing. If you're experiencing severe stress, anxiety, or depression, please seek professional help.</p>
@@ -344,8 +511,8 @@ const LifestyleTab = () => {
       ) : (
         <div className="empty-state">
           <FaHeart className="empty-icon" />
-          <h3>Select a health condition to get personalized lifestyle recommendations</h3>
-          <p>Our AI will provide tailored suggestions for diet, exercise, sleep, and mental health based on your specific condition.</p>
+          <h3>No personalized recommendations available</h3>
+          <p>We couldn't find any lifestyle recommendations for your profile. Please ensure your medical information is up to date.</p>
         </div>
       )}
     </div>

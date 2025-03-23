@@ -5,7 +5,7 @@ import { AuthContext } from '../context/authContext.jsx';
 import './Navbar.css';
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { currentUser, logout } = useContext(AuthContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -23,34 +23,38 @@ const Navbar = () => {
         </Link>
 
         <div className="navbar-links">
-          {user ? (
+          {currentUser ? (
             <>
               <Link to="/dashboard" className="nav-link">Dashboard</Link>
               <Link to="/records" className="nav-link">Medical Records</Link>
-              {user.role === 'doctor' && (
+              {currentUser.role === 'doctor' && (
                 <Link to="/patients" className="nav-link">Patients</Link>
               )}
               <div className="user-menu">
-                <button 
+                <button
                   className="profile-button"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                   <div className="avatar">
-                    {user.profile?.firstName?.[0] || <FaUser />}
+                    {currentUser.profile?.firstName?.[0] || <FaUser />}
                   </div>
-                  <span className="user-name">{user.profile?.firstName || 'User'}</span>
+                  <span className="user-name">{currentUser.profile?.firstName || 'User'}</span>
                 </button>
-                
+
                 {dropdownOpen && (
                   <div className="dropdown-menu">
                     <Link to="/profile" className="dropdown-item">
                       <FaUser className="dropdown-icon" />
                       Profile
                     </Link>
-                    <button onClick={handleLogout} className="dropdown-item">
+                    <Link to={'/login'}>
+                    <button onClick={handleLogout} className="dropdown-item" href="/login">
                       <FaSignOutAlt className="dropdown-icon" />
+                  
                       Logout
+                 
                     </button>
+                    </Link>
                   </div>
                 )}
               </div>

@@ -1,12 +1,13 @@
-.login-container {
+.signup-container {
   display: flex;
   height: 100vh;
   width: 100%;
   align-items: stretch;
+  background-color: #f8f9fa;
 }
 
 /* Left side - Form container */
-.login-form-container {
+.signup-form-container {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -14,33 +15,41 @@
   padding: 2rem 4rem;
   max-width: 500px;
   margin: 0 auto;
-  /* Center the form container when alone */
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  /* Add some margin and padding to ensure the form doesn't touch edges */
+  margin: 2rem;
+  height: auto;
+  overflow-y: auto;
 }
 
 /* When the image is shown, adjust the form container */
 @media (min-width: 768px) {
-  .login-form-container {
-    margin: 0;
-    /* Remove auto margin when side by side with image */
+  .signup-form-container {
+    margin: 2rem;
+    /* Keep consistent margin for better appearance */
   }
 
   /* Add this to ensure proper spacing */
-  .login-container {
+  .signup-container {
     justify-content: center;
+    align-items: center;
   }
 }
 
-.login-header {
+.signup-header {
   margin-bottom: 2rem;
+  text-align: center;
 }
 
-.login-header h1 {
+.signup-header h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
   color: #333;
 }
 
-.login-header p {
+.signup-header p {
   color: #666;
 }
 
@@ -52,7 +61,7 @@
   margin-bottom: 1rem;
 }
 
-.login-form {
+.signup-form {
   width: 100%;
 }
 
@@ -85,6 +94,50 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Add styles for the gender dropdown */
+.form-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  box-sizing: border-box;
+}
+
+/* Add styles for the user type toggle */
+.type-toggle {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.type-toggle-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.type-toggle-btn.active {
+  background-color: #2196f3;
+  color: white;
+}
+
+.type-toggle-btn:not(.active):hover {
+  background-color: #e0e0e0;
 }
 
 .form-options {
@@ -94,21 +147,16 @@
   margin-bottom: 1.5rem;
 }
 
-.remember-me {
+.terms-agreement {
   display: flex;
   align-items: center;
 }
 
-.remember-me input {
+.terms-agreement input {
   margin-right: 0.5rem;
 }
 
-.forgot-password {
-  color: #2196f3;
-  text-decoration: none;
-}
-
-.login-button {
+.signup-button {
   width: 100%;
   background-color: #2196f3;
   color: white;
@@ -120,10 +168,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 1rem;
+  /* Ensure there's space after the button */
 }
 
-.login-button:hover {
+.signup-button:hover {
   background-color: #1976d2;
+}
+
+.signup-button:disabled {
+  background-color: #90caf9;
+  cursor: not-allowed;
 }
 
 .spinner {
@@ -140,27 +195,27 @@
   }
 }
 
-.login-footer {
-  margin-top: 2rem;
+.signup-footer {
+  margin-top: 1.5rem;
   text-align: center;
   color: #666;
 }
 
-.signup-link {
+.signin-link {
   color: #2196f3;
   text-decoration: none;
   font-weight: 500;
 }
 
 /* Right side - Image container */
-.login-image-container {
+.signup-image-container {
   flex: 1;
   position: relative;
   display: none;
   /* Hidden on mobile by default */
 }
 
-.login-image {
+.signup-image {
   position: absolute;
   top: 0;
   left: 0;
@@ -172,7 +227,7 @@
   background-position: center;
 }
 
-.login-overlay {
+.signup-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -188,31 +243,33 @@
   text-align: center;
 }
 
-.login-overlay h2 {
+.signup-overlay h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
-.login-overlay p {
+.signup-overlay p {
   font-size: 1.2rem;
   max-width: 80%;
 }
 
 /* Media queries for responsive design */
 @media (min-width: 768px) {
-  .login-image-container {
+  .signup-image-container {
     display: block;
     /* Show on tablet and larger */
   }
 }
 
 @media (max-width: 767px) {
-  .login-container {
+  .signup-container {
     flex-direction: column;
+    padding: 1rem;
   }
 
-  .login-form-container {
-    padding: 2rem;
+  .signup-form-container {
+    padding: 1.5rem;
+    margin: 1rem;
     max-width: 100%;
   }
 }
@@ -229,4 +286,5 @@ body,
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-} 
+  background-color: #f8f9fa;
+}

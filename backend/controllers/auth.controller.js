@@ -4,13 +4,8 @@ import generateTockenAndSetCookie from "../utils/generateTocken.js";
 
 export const signup = async (req, res) => {
   try {
-    const { username, password, confirmpassword, gender, type, name } =
+    const { username, password, gender, type, name } =
       req.body;
-    console.log(password + confirmpassword);
-    if (password !== confirmpassword) {
-      return res.status(400).json({ error: "passwords dont match" });
-    }
-
     const user = await User.findOne({ username });
 
     if (user) {
@@ -31,10 +26,10 @@ export const signup = async (req, res) => {
       gender,
       profilepic: gender === "male" ? boyProfilePic : girlProfilePic,
     });
-
     await newUser.save();
 
     if (newUser) {
+
       //generate JWT tocken here
       generateTockenAndSetCookie(newUser._id, res);
       await newUser.save();

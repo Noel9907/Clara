@@ -6,20 +6,25 @@ import './signup.css';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    username: 'sooraj',
+    name: 'Sooraj',
+    type: 'patient', // Default type
+    gender: 'male',
+    password: 'noice123',
+    confirmPassword: 'noice123',
   });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { register } = useContext(AuthContext);
+  const { signup } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleTypeToggle = (type) => {
+    setFormData({ ...formData, type });
   };
 
   const handleSubmit = async (e) => {
@@ -35,72 +40,117 @@ const Signup = () => {
     setIsLoading(true);
 
     try {
-      await register(formData.firstName, formData.lastName, formData.email, formData.password);
+      const userType = formData.type === 'patient' ? false : true;
+
+
+      if (typeof signup !== 'function') {
+        throw new Error('Signup function is undefined. Check AuthContext.');
+      }
+
+      const response = await signup(
+        formData.username,
+        formData.password,
+        formData.gender,
+        userType,  // boolean value
+        formData.name
+      );
+
+      console.log('Submitting form data:', response);
+
+      console.log('Signup successful:', response);
+      
       navigate('/dashboard');
     } catch (err) {
-      setError(err.message || 'Failed to create account. Please try again.');
+      console.error('Signup error:', err);
+      if (err.message === 'username already exists') {
+        setError('Username already taken. Please choose a different username.');
+      } else {
+        setError(err.message || 'Failed to create account. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-form-container">
-        <div className="login-header">
+    <div className="signup-container">
+      <div className="signup-form-container">
+        <div className="signup-header">
           <h1>Create Account</h1>
           <p>Fill in your details to get started</p>
         </div>
 
         {error && <div className="error-message">{error}</div>}
 
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="signup-form">
           <div className="form-group">
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="username">Username</label>
             <div className="input-with-icon">
               <FaUser className="input-icon" />
               <input
                 type="text"
-                id="firstName"
-                name="firstName"
-                value={formData.firstName}
+                id="username"
+                name="username"
+                value={formData.username}
                 onChange={handleChange}
-                placeholder="Enter your first name"
+                placeholder="Enter your username"
                 required
               />
             </div>
           </div>
 
           <div className="form-group">
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="name">Full Name</label>
             <div className="input-with-icon">
               <FaUser className="input-icon" />
               <input
                 type="text"
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
+                id="name"
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
-                placeholder="Enter your last name"
+                placeholder="Enter your full name"
                 required
               />
             </div>
           </div>
 
           <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <div className="input-with-icon">
-              <FaEnvelope className="input-icon" />
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Enter your email"
-                required
-              />
+            <label>User Type</label>
+            <div className="type-toggle">
+              <button
+                type="button"
+                className={`type-toggle-btn ${formData.type === 'patient' ? 'active' : ''}`}
+                onClick={() => handleTypeToggle('patient')}
+              >
+                Patient
+              </button>
+              <button
+                type="button"
+                className={`type-toggle-btn ${formData.type === 'healthcare_provider' ? 'active' : ''}`}
+                onClick={() => handleTypeToggle('healthcare_provider')}
+              >
+                Healthcare Provider
+              </button>
             </div>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="gender">Gender</label>
+            <select
+              id="gender"
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              className="form-select"
+              required
+            >
+              <option value="">Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+              <option value="prefer_not_to_say">Prefer not to say</option>
+            </select>
           </div>
 
           <div className="form-group">
@@ -138,27 +188,27 @@ const Signup = () => {
           </div>
 
           <div className="form-options">
-            <div className="remember-me">
+            <div className="terms-agreement">
               <input type="checkbox" id="terms" required />
               <label htmlFor="terms">I agree to the Terms of Service</label>
             </div>
           </div>
 
-          <button type="submit" className="login-button" disabled={isLoading}>
+          <button type="submit" className="signup-button" disabled={isLoading}>
             {isLoading ? <FaSpinner className="spinner" /> : 'Create Account'}
           </button>
         </form>
 
-        <div className="login-footer">
+        <div className="signup-footer">
           <p>
-            Already have an account? <Link to="/login" className="login-link">Log in</Link>
+            Already have an account? <Link to="/login" className="signin-link">Sign in</Link>
           </p>
         </div>
       </div>
 
-      <div className="login-image-container">
-        <div className="login-image">
-          <div className="login-overlay">
+      <div className="signup-image-container">
+        <div className="signup-image">
+          <div className="signup-overlay">
             <h2>Your Health, Digitized</h2>
             <p>Securely manage all your medical records in one place</p>
           </div>

@@ -1,12 +1,50 @@
 {
   "name": "allen",
   "dob": "1990-01-15",
-  "conditions": ["Diabetes", "Hypertension"],
-  "medications": [
-    { "name": "Metformin", "dosage": "500mg", "frequency": "Twice a day" },
-    { "name": "Lisinopril", "dosage": "10mg", "frequency": "Once a day" }
+  "conditions": [
+    "Diabetes",
+    "Hypertension"
   ],
-  "allergies": ["Penicillin"],
+  "medications": [
+    {
+      "name": "Metformin",
+      "dosage": "500mg",
+      "frequency": "Twice a day"
+    },
+    {
+      "name": "Lisinopril",
+      "dosage": "10mg",
+      "frequency": "Once a day"
+    },
+    {
+      "name": "Thyronorm",
+      "dosage": "100mcg",
+      "frequency": "Once daily"
+    },
+    {
+      "name": "Hifnac P",
+      "dosage": null,
+      "frequency": "Once daily"
+    },
+    {
+      "name": "Levocetrizine",
+      "dosage": null,
+      "frequency": "Once daily"
+    },
+    {
+      "name": "Texop",
+      "dosage": null,
+      "frequency": "Once daily"
+    },
+    {
+      "name": "BudeCort",
+      "dosage": null,
+      "frequency": "Once daily"
+    }
+  ],
+  "allergies": [
+    "Penicillin"
+  ],
   "lab_results": {
     "blood_sugar": "120 mg/dL",
     "cholesterol": "190 mg/dL"
@@ -15,6 +53,10 @@
     {
       "date": "2024-02-01",
       "note": "Patient's blood sugar levels are improving."
+    },
+    {
+      "date": "YYYY-MM-DD",
+      "note": "Dr. Sajin Mathew"
     }
   ]
 }

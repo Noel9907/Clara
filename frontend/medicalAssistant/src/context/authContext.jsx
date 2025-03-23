@@ -3,77 +3,117 @@ import React, { createContext, useState, useEffect } from 'react';
 // Create the AuthContext
 export const AuthContext = createContext();
 
-// Create the AuthProvider component
+// Backend API URL (Replace with your actual backend endpoint)
+const API_BASE_URL = "http://localhost:3000";
+
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   // Check if user is already logged in when app loads
   useEffect(() => {
-    // Check local storage for saved user session
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setCurrentUser(JSON.parse(savedUser));
+    try {
+      const savedUser = localStorage.getItem("user");
+      if (savedUser && savedUser !== "undefined") {
+        setCurrentUser(JSON.parse(savedUser));
+      }
+    } catch (error) {
+      console.error("Error parsing user from localStorage:", error);
+      // Clear the invalid data
+      localStorage.removeItem("user");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
-  // Login function
-  const login = async (email, password) => {
-    // For a real application, this would be an API call
-    // This is a simplified example for demonstration
+  // **Login function** - Updated to handle server response format
+  const login = async (username, password) => {
+    setLoading(true);
     try {
-      setLoading(true);
-      
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Example validation
-      if (email === 'test@example.com' && password === 'password123') {
-        const user = { id: 1, email, name: 'Test User' };
-        setCurrentUser(user);
-        localStorage.setItem('user', JSON.stringify(user));
-        return user;
-      } else {
-        throw new Error('Invalid email or password');
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Invalid username or password");
       }
+
+      const data = await response.json();
+      console.log("Login response:", data);
+
+      // Store the user data - assuming the whole response object IS the user
+      // This is the key change from the previous version
+      const userData = data; // Instead of data.user
+
+      setCurrentUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+      return userData;
+    } catch (error) {
+      console.error("Login failed:", error);
+      throw error;
     } finally {
       setLoading(false);
     }
   };
 
-  // Logout function
+  // **Register function**
+  const signup = async (username, password, gender, type, name) => {
+    try {
+      console.log('Signup Request Data:', { username, password, gender, type, name });
+
+      const res = await fetch('http://localhost:3000/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, gender, type, name })
+      });
+      console.log('Response status:', res.status);
+      console.log('Response headers:', [...res.headers.entries()]);
+
+      // Get the complete response text
+      const responseText = await res.text();
+      console.log('Raw response:', responseText);
+
+      if (!res.ok) {
+        let errorMessage = 'Failed to register';
+
+        // Try to parse the response as JSON if possible
+        try {
+          const errorData = JSON.parse(responseText);
+          errorMessage = errorData.message || errorData.error || errorMessage;
+          console.error('Parsed error data:', errorData);
+        } catch (parseError) {
+          console.error('Could not parse error response as JSON:', responseText);
+        }
+
+        throw new Error(errorMessage);
+      }
+
+      try {
+        return JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('Failed to parse success response:', responseText);
+        return { success: true, raw: responseText };
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      throw error;
+    }
+  };
+
+  // **Logout function**
   const logout = () => {
     setCurrentUser(null);
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
   };
 
-  // Register function
-  const register = async (name, email, password) => {
-    // For a real application, this would be an API call
-    try {
-      setLoading(true);
-      
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Example validation (in a real app you'd check if email exists)
-      const user = { id: Date.now(), email, name };
-      setCurrentUser(user);
-      localStorage.setItem('user', JSON.stringify(user));
-      return user;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Create the context value object
   const value = {
     currentUser,
     loading,
     login,
     logout,
-    register
+    signup,
   };
 
   return (

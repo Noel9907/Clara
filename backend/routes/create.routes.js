@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.post("/upload", uploadFile);
 router.post("/notes", processImage);
-
 router.post("/chat", chat);
 
 export default router;

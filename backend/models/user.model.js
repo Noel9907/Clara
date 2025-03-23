@@ -25,10 +25,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       enum: ["male", "female"],
     },
-    // profilepic: {
-    //   type: String,
-    //   default: "",
-    // },
+    profilepic: {
+      type: String,
+      default: "",
+    },
     // insterested_categories: {
     //   type: String,
     //   required: false,
